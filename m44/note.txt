@@ -1,0 +1,125 @@
+===============================
+44-0 Milestone Overview
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- আগের milestone এ কী শিখেছি?
+- নতুন milestone এ কী শিখবো?
+- Phase অনুযায়ী React development এর roadmap কী?
+- React Router এর গুরুত্বপূর্ণ hooks কোনগুলো?
+- Final project কী হবে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Previous Milestone Recap
+📌 Explanation:
+- React এর হাতেখড়ি হয়েছে।
+- Simple project বানানো হয়েছে।
+- Component তৈরি এবং state management শিখেছি।
+- Basic props, event handling, এবং UI rendering শিখেছি।
+
+---
+
+2. Current Milestone Goals
+📌 Explanation:
+- Complete React development শিখবো।
+- Data handling → API থেকে data fetch এবং visualization।
+- Routing → বিভিন্ন page এবং sub-page তৈরি।
+- User interaction handling → form, events, context API ইত্যাদি।
+- Final project → Book Vibe।
+
+---
+
+3. Phase 1: Design and Data Visualization
+👉 Tools:
+- TailwindCSS → utility-first CSS framework।
+- DaisyUI → Tailwind এর উপর ভিত্তি করে UI components।
+- Recharts → data visualization library (charts, graphs)।
+- Axios → API call করার জন্য।
+
+📌 Explanation:
+- এই phase এ UI সুন্দরভাবে design করা শিখবো।
+- Data কে chart আকারে visualize করা শিখবো।
+- API থেকে data fetch করে UI তে দেখানো শিখবো।
+
+---
+
+4. Phase 2: Routing Mastery
+👉 Topics:
+- Route create করা।
+- Nested route → main page এর ভিতরে sub-page।
+- Dynamic route → details page (যেমন: blog/:id)।
+- Route level data loader → route এর সাথে data load করা।
+
+👉 Important React Router Hooks:
+- useLoaderData() → route loader থেকে data access।
+- useParams() → dynamic route parameter access।
+- useNavigation() → navigation state track।
+- useLocation() → current location/path access।
+- useOutletContext() → parent থেকে child route এ context share।
+
+📌 Explanation:
+- এই phase এ routing এর সব advanced concept শিখবো।
+- Nested এবং dynamic route দিয়ে complex UI তৈরি করা যাবে।
+- Hooks দিয়ে route data এবং navigation handle করা যাবে।
+
+---
+
+5. Phase 3: React Core Mastery
+👉 Topics:
+- Form submission → data input এবং validation।
+- Controlled vs Uncontrolled form → state দিয়ে form manage বনাম ref দিয়ে form manage।
+- useRef() → DOM element বা mutable value track করার জন্য।
+- Custom hook → reusable logic তৈরি করার জন্য।
+- Context API → global state share করার জন্য।
+- useFormStatus(), useActionState() → form এর status এবং action state track করার জন্য।
+
+📌 Explanation:
+- এই phase এ React এর core concepts শিখবো।
+- Form handling এবং global state management শিখবো।
+- Custom hook দিয়ে code reuse শিখবো।
+
+---
+
+6. Phase 4: Final Project
+👉 Project: Book Vibe
+📌 Explanation:
+- Complete React project বানানো হবে।
+- এতে থাকবে:
+  - UI design (Tailwind + DaisyUI)
+  - Data visualization (Recharts)
+  - Routing (React Router)
+  - API call (Axios)
+  - Form handling এবং Context API
+- এই project → milestone এর সব concept একসাথে ব্যবহার করবে।
+
+---
+
+7. Output (Example)
+👉 UI:
+- সুন্দর design করা app।
+- Data visualization charts।
+- Multiple pages with nested and dynamic routes।
+- Form submission এবং validation।
+- Final project → Book Vibe।
+
+---
+
+8. Advantages
+- Step by step React mastery।
+- Tailwind + DaisyUI → দ্রুত সুন্দর UI।
+- Recharts + Axios → data visualization এবং API handling।
+- Routing mastery → complex app তৈরি করা যাবে।
+- Core mastery → form, context, custom hook।
+- Final project → সব concept একসাথে প্রয়োগ।
+
+---
+
+📌 Summary
+- আগের milestone → React এর basic শিখেছি।
+- নতুন milestone → complete React development শিখবো।
+- Phase 1 → design এবং data visualization।
+- Phase 2 → routing mastery এবং React Router hooks।
+- Phase 3 → React core mastery (form, context, custom hook)।
+- Phase 4 → Final project Book Vibe।
+- Result → React developer হিসেবে পূর্ণ foundation তৈরি হবে।
