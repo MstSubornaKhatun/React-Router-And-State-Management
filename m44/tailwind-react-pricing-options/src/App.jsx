@@ -7,7 +7,7 @@ function App() {
     <>
       <header> 
          <NavBar></NavBar>
-         <DaisyNav></DaisyNav>
+         {/* <DaisyNav></DaisyNav> */}
         <h1 className="text-7xl underline">Vite + React</h1>
       </header>
       <main>
