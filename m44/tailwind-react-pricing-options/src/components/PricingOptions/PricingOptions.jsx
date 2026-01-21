@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { use } from 'react';
 
-const PricingOptions = () => {
+const PricingOptions = ({pricingPromise}) => {
+
+    const pricingData = use(pricingPromise);
+
+    console.log(pricingData)
+
+
     return (
         <div>
-            
+            <h1>Hello</h1>
         </div>
     );
 };

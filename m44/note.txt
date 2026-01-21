@@ -433,3 +433,133 @@ return (
 - Result → dynamic, responsive, এবং modern navbar।
 
 
+===============================
+44-4 Toggle Menu Items and Create Pricing Data
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Toggle menu items কীভাবে কাজ করে?
+- useState দিয়ে menu toggle state কিভাবে manage হয়?
+- Lucide icons (Menu, X) কীভাবে ব্যবহার করা হয়েছে?
+- Responsive design এ md:hidden এবং md:flex এর ভূমিকা কী?
+- প্রতিটি line of code কী করছে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Navigation Data
+👉 Code:
+const navigationData = [
+    { name: "Home", path: "/home", id: 1 },
+    { name: "About Us", path: "/about-us", id: 2 },
+    { name: "Services", path: "/services", id: 3 },
+    { name: "Contact", path: "/contact", id: 4 },
+    { name: "Blog", path: "/blog", id: 5 }
+];
+
+📌 Explanation:
+- navigationData → array of objects।
+- প্রতিটি object এ id, name, path আছে।
+- এই data loop করে dynamic navigation links তৈরি করা হবে।
+- Future এ সহজে update করা যাবে।
+
+---
+
+2. State Declaration
+👉 Code:
+const [open, setOpen] = useState(false);
+
+📌 Explanation:
+- useState(false) → শুরুতে menu বন্ধ থাকবে।
+- open → boolean state (true হলে menu খোলা, false হলে বন্ধ)।
+- setOpen → state update করার function।
+
+---
+
+3. Links Mapping
+👉 Code:
+const links = navigationData.map(route => <Link key={route.id} route={route}></Link>)
+
+📌 Explanation:
+- navigationData.map(...) → প্রতিটি route object loop করছে।
+- <Link ...> → Link component এ route props পাঠানো হচ্ছে।
+- ফলে dynamic navigation links তৈরি হচ্ছে।
+
+---
+
+4. NavBar Component Return
+👉 Code:
+return (
+    <nav className='flex justify-between mx-10 mt-4'>
+        <span className='flex' onClick={() => setOpen(!open)}>
+            {
+                open ?
+                    <X className='md:hidden'></X> :
+                    <Menu className='md:hidden'></Menu>
+            }
+            <ul className={`md:hidden absolute duration-1000 text-black
+                ${open ? 'top-8' : '-top-40'}
+                bg-amber-200`}>
+                {links}
+            </ul>
+            <h3 className='ml-4'>My Navbar</h3>
+        </span>
+        <ul className='md:flex hidden'>
+            {links}
+        </ul>
+        <button>Sign In</button>
+    </nav>
+);
+
+📌 Explanation (Line by Line):
+- `<nav className='flex justify-between mx-10 mt-4'>` → Navbar container, flex layout, margin।
+- `<span className='flex' onClick={() => setOpen(!open)}>` → span element, click করলে open state toggle হবে।
+- `{ open ? <X className='md:hidden'></X> : <Menu className='md:hidden'></Menu>}` →  
+  - যদি open true হয় → X icon দেখাবে।  
+  - যদি open false হয় → Menu icon দেখাবে।  
+  - md:hidden → medium screen এ icon hide হবে।
+- `<ul className={...}>` → small screen এ menu list দেখাবে।  
+  - open true হলে → top-8 (visible)।  
+  - open false হলে → -top-40 (hidden)।  
+  - duration-1000 → smooth animation।
+  - bg-amber-200 → background color।
+- `<h3 className='ml-4'>My Navbar</h3>` → Navbar title।
+- `<ul className='md:flex hidden'> { links } </ul>` → large screen এ horizontal menu দেখাবে।
+- `<button>Sign In</button>` → Sign In button।
+
+---
+
+5. Responsive Design
+📌 Explanation:
+- md:hidden → medium screen এ hide হবে।
+- md:flex hidden → large screen এ flex layout visible হবে।
+- Result → small screen এ toggle menu, large screen এ full menu।
+
+---
+
+6. Output (Example)
+👉 Small Screen:
+- Menu icon → click করলে open state true হবে।
+- X icon → দেখাবে এবং menu list visible হবে।
+👉 Large Screen:
+- Full navigation links horizontal layout এ দেখাবে।
+- Toggle icon hidden থাকবে।
+
+---
+
+7. Advantages
+- Dynamic toggle → useState দিয়ে সহজে manage করা যায়।
+- Lucide icons → modern এবং customizable icons।
+- Responsive design → small এবং large screen এ আলাদা layout।
+- Reusable links → navigationData থেকে dynamic link তৈরি।
+- Clean separation → Link component আলাদা রাখা হয়েছে।
+
+---
+
+📌 Summary
+- navigationData → array of objects দিয়ে dynamic navigation তৈরি হয়েছে।
+- useState → menu toggle state manage করছে।
+- Lucide icons (Menu, X) → toggle button হিসেবে ব্যবহার হয়েছে।
+- Responsive design → small screen এ toggle menu, large screen এ full menu।
+- Result → dynamic, responsive, এবং modern navbar।
+
+

@@ -57,19 +57,7 @@ const NavBar = () => {
                 }
             </ul>
 
-            {/* <ul className='flex'>
-                {
-                    navigationData.map(route =><li className='mr-10'>
-                        <a href={route.path}>{route.name}</a>
-                        </li>)
-                }
-            </ul> */}
 
-            {/* <ul className='flex'>
-                <li className='mr-10'><a href="/">Home</a></li>
-                <li className='mr-10'><a href="/about">About</a></li>
-                <li className='mr-10'><a href="/blog">Blog</a></li>
-            </ul> */}
 
             <button>Sign In</button>
         </nav>
