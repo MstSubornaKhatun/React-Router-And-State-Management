@@ -31,6 +31,7 @@ const navigationData = [
 ];
 
 
+
 const NavBar = () => {
     const [open, setOpen] = useState(false);
 

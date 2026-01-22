@@ -4,7 +4,7 @@ import "./App.css";
 import NavBar from "./components/NavBar/NavBar";
 import PricingOptions from "./components/PricingOptions/PricingOptions";
 
-// const pricingPromise = fetch('pricingData.json').then(res => res.json());
+const pricingPromise = fetch('PricingData.json').then(res => res.json());
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       </header>
       <main>
         <Suspense fallback={<span class="loading loading-spinner loading-xl"></span>}>
-          <PricingOptions ></PricingOptions>
+          <PricingOptions pricingPromise={pricingPromise}></PricingOptions>
         </Suspense> 
       
 
