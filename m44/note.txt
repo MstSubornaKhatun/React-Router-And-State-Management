@@ -304,6 +304,194 @@ npm i -D daisyui@latest
 - Responsive Navbar এবং Hero section তৈরি করা হয়েছে।
 - Result → Tailwind + DaisyUI দিয়ে সুন্দর responsive React application।
 
+
+===============================
+44-2 Start a Custom Navigation and Install Lucide Icons
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Custom navigation data কীভাবে তৈরি করা যায়?
+- NavigationData array of objects আকারে কিভাবে রাখা হয়?
+- Lucide icons React এ কিভাবে install এবং ব্যবহার করা যায়?
+- প্রতিটি component (App, DaisyNav, NavBar, Link) কী করছে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Lucide Installation
+👉 Command:
+npm install lucide-react
+
+📌 Explanation:
+- Lucide → modern icon library।
+- lucide-react → React এর জন্য Lucide icons।
+- Install করার পর import করে JSX এ ব্যবহার করা যাবে।
+
+---
+
+2. App.jsx
+👉 Code:
+```jsx
+import "./App.css";
+import DaisyNav from "./components/DaisyNav/DaisyNav";
+import NavBar from "./components/NavBar/NavBar";
+
+function App() {
+  return (
+    <>
+      <NavBar></NavBar>
+      <DaisyNav></DaisyNav>
+      <h1 className="text-7xl underline">Vite + React</h1>
+    </>
+  );
+}
+
+export default App;
+
+📌 Explanation (Line by Line):
+ - import "./App.css"; → global CSS import।
+ - import DaisyNav, NavBar → custom navigation components import।
+ - <NavBar> → custom navigation render।
+ - <DaisyNav> → DaisyUI navigation render।
+ - <h1> → heading text।
+ - export default App; → App component export।
+
+
+3. DaisyNav.jsx
+👉 Code:
+
+const DaisyNav = () => {
+  return (
+    <div>
+      <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+              <svg ... /> {/* hamburger icon */}
+            </div>
+            <ul className="menu menu-sm dropdown-content ...">
+              <li><a>Item 1</a></li>
+              <li>
+                <a>Parent</a>
+                <ul className="p-2">
+                  <li><a>Submenu 1</a></li>
+                  <li><a>Submenu 2</a></li>
+                </ul>
+              </li>
+              <li><a>Item 3</a></li>
+            </ul>
+          </div>
+          <a className="btn btn-ghost text-xl">daisyUI</a>
+        </div>
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">
+            <li><a>Item 1</a></li>
+            <li>
+              <details>
+                <summary>Parent</summary>
+                <ul className="p-2 bg-base-100 w-40 z-1">
+                  <li><a>Submenu 1</a></li>
+                  <li><a>Submenu 2</a></li>
+                </ul>
+              </details>
+            </li>
+            <li><a>Item 3</a></li>
+          </ul>
+        </div>
+        <div className="navbar-end">
+          <a className="btn">Button</a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+📌 Explanation (Line by Line):
+ - navbar-start → left side content।
+ - dropdown → small screen এ hamburger menu।
+ - lg:hidden → large screen এ dropdown hide।
+ - navbar-center hidden lg:flex → large screen এ horizontal menu।
+ - navbar-end → right side button।
+ - DaisyUI classes → responsive navbar তৈরি করছে।
+
+
+4. NavBar.jsx
+👉 Code:
+
+import React from 'react';
+import Link from './Link';
+
+const navigationData = [
+  { id: 1, name: "Home", path: "/" },
+  { id: 2, name: "About", path: "/about" },
+  { id: 3, name: "Services", path: "/services" },
+  { id: 4, name: "Blog", path: "/blog" },
+  { id: 5, name: "Contact", path: "/contact" }
+];
+
+const NavBar = () => {
+  return (
+    <nav>
+      <ul className='flex'>
+        { navigationData.map(route => <Link route={route}></Link>) }
+      </ul>
+    </nav>
+  );
+};
+
+export default NavBar;
+
+
+📌 Explanation (Line by Line):
+ - navigationData → array of objects, প্রতিটি route এর জন্য id, name, path।
+ - <ul className='flex'> → Tailwind flex layout।
+ - navigationData.map(...) → প্রতিটি route object loop করছে।
+ - <Link route={route}> → Link component এ route props পাঠানো হচ্ছে।
+ - Result → dynamic navigation তৈরি হচ্ছে।
+
+
+5. Link.jsx
+👉 Code:
+
+const Link = ({route}) => {
+  return (
+    <li className='px-4'>
+      <a href={route.path}>{route.name}</a>
+    </li>
+  );
+};
+
+export default Link;
+
+
+📌 Explanation (Line by Line):
+ - Link component → props থেকে route পাচ্ছে।
+ - <li className='px-4'> → padding দিয়ে spacing।
+ - <a href={route.path}>{route.name}</a> → route এর path এবং name UI তে দেখাচ্ছে।
+ - Result → প্রতিটি navigation link render হচ্ছে।
+
+Output (Example)
+👉 UI:
+ - Custom NavBar → dynamic links (Home, About, Services, Blog, Contact)।
+ - DaisyNav → DaisyUI responsive navbar।
+ - Lucide icons → future এ navigation link এর সাথে icon যোগ করা যাবে।
+
+Advantages
+ - Dynamic navigation → সহজে update করা যায়।
+ - Lucide icons → modern এবং customizable icons।
+ - DaisyUI → responsive navbar ready-made।
+ - Props → child component এ data পাঠানো যায়।
+ - Clear separation → NavBar (list), Link (single item), DaisyNav (UI style)।
+
+📌 Summary
+ - navigationData → array of objects দিয়ে dynamic navigation তৈরি হয়েছে।
+ - NavBar.jsx  → navigationData loop করে Link component render করছে।
+ - Link.jsx  → প্রতিটি route UI তে দেখাচ্ছে।
+ - DaisyNav.jsx  → DaisyUI দিয়ে responsive navbar তৈরি হয়েছে।
+ - Lucide-react → icon library install করা হয়েছে।
+ - Result → custom + DaisyUI navigation, dynamic links, এবং icon support।
+
+
 ===============================
 44-3 Dynamic Menu Button Toggle and Menu Toggle
 ===============================
@@ -317,88 +505,90 @@ npm i -D daisyui@latest
 
 📝 Notes (বিস্তারিত তথ্য)
 
-1. Navigation Data
+1. Full Code (NavBar.jsx)
 👉 Code:
+import React, { useState } from 'react';
+import Link from './Link';
+import { Menu, X } from 'lucide-react';
+
 const navigationData = [
-    { name: "Home", path: "/home", id: 1 },
-    { name: "About Us", path: "/about-us", id: 2 },
-    { name: "Services", path: "/services", id: 3 },
-    { name: "Contact", path: "/contact", id: 4 },
-    { name: "Blog", path: "/blog", id: 5 }
+  { id: 1, name: "Home", path: "/" },
+  { id: 2, name: "About", path: "/about" },
+  { id: 3, name: "Services", path: "/services" },
+  { id: 4, name: "Blog", path: "/blog" },
+  { id: 5, name: "Contact", path: "/contact" }
 ];
 
-📌 Explanation:
-- navigationData → array of objects।
-- প্রতিটি object এ id, name, path আছে।
-- এই data loop করে navigation links তৈরি করা হবে।
-- Dynamic navigation → future এ সহজে update করা যাবে।
+const NavBar = () => {
+  const [open, setOpen] = useState(false);
 
----
+  const links = navigationData.map(route => (
+    <Link key={route.id} route={route}></Link>
+  ));
 
-2. State Declaration
-👉 Code:
-const [open, setOpen] = useState(false);
-
-📌 Explanation:
-- useState(false) → শুরুতে menu বন্ধ থাকবে।
-- open → boolean state (true হলে menu খোলা, false হলে বন্ধ)।
-- setOpen → state update করার function।
-
----
-
-3. Links Mapping
-👉 Code:
-const links = navigationData.map(route => <Link key={route.id} route={route}></Link>)
-
-📌 Explanation:
-- navigationData.map(...) → প্রতিটি route object loop করছে।
-- <Link ...> → Link component এ route props পাঠানো হচ্ছে।
-- ফলে dynamic navigation links তৈরি হচ্ছে।
-
----
-
-4. NavBar Component Return
-👉 Code:
-return (
+  return (
     <nav className='flex justify-between mx-10 mt-4'>
-        <span className='flex' onClick={() => setOpen(!open)}>
-            {
-                open ?
-                    <X className='md:hidden'></X> :
-                    <Menu className='md:hidden'></Menu>
-            }
-            <ul className={`md:hidden absolute duration-1000 text-black
-                ${open ? 'top-8' : '-top-40'}
-                bg-amber-200`}>
-                {links}
-            </ul>
-            <h3 className='ml-4'>My Navbar</h3>
-        </span>
-        <ul className='md:flex hidden'>
-            {links}
+      <span className='flex' onClick={() => setOpen(!open)}>
+        {open ? (
+          <X className='md:hidden'></X>
+        ) : (
+          <Menu className='md:hidden'></Menu>
+        )}
+        <ul
+          className={`md:hidden absolute duration-1000 text-black
+            ${open ? 'top-8' : '-top-40'}
+            bg-amber-200`}
+        >
+          {links}
         </ul>
-        <button>Sign In</button>
-    </nav>
-);
+        <h3 className='ml-4'>My Navbar</h3>
+      </span>
 
-📌 Explanation (Line by Line):
-- `<nav className='flex justify-between mx-10 mt-4'>` → Navbar container, flex layout, margin।
-- `<span className='flex' onClick={() => setOpen(!open)}>` → span element, click করলে open state toggle হবে।
-- `{ open ? <X className='md:hidden'></X> : <Menu className='md:hidden'></Menu>}` →  
-  - যদি open true হয় → X icon দেখাবে।  
-  - যদি open false হয় → Menu icon দেখাবে।  
-  - md:hidden → medium screen এ icon hide হবে।
-- `<ul className={...}>` → small screen এ menu list দেখাবে।  
-  - open true হলে → top-8 (visible)।  
-  - open false হলে → -top-40 (hidden)।  
-  - duration-1000 → smooth animation।
-- `<h3 className='ml-4'>My Navbar</h3>` → Navbar title।
-- `<ul className='md:flex hidden'> { links } </ul>` → large screen এ horizontal menu দেখাবে।
-- `<button>Sign In</button>` → Sign In button।
+      <ul className='md:flex hidden'>
+        {links}
+      </ul>
+
+      <button>Sign In</button>
+    </nav>
+  );
+};
+
+export default NavBar;
 
 ---
 
-5. Responsive Design
+2. Link.jsx
+👉 Code:
+import React from 'react';
+
+const Link = ({ route }) => {
+  return (
+    <li className='px-4'>
+      <a href={route.path}>{route.name}</a>
+    </li>
+  );
+};
+
+export default Link;
+
+---
+
+3. Explanation (Line by Line)
+- `import React, { useState }` → React functional component + useState hook।
+- `import { Menu, X } from 'lucide-react'` → Lucide icons import।
+- `navigationData` → array of objects with id, name, path।
+- `const [open, setOpen] = useState(false)` → menu initially closed।
+- `const links = navigationData.map(...)` → dynamic links তৈরি হচ্ছে।
+- `<span onClick={() => setOpen(!open)}>` → click করলে open state toggle হবে।
+- `{ open ? <X> : <Menu> }` → open true হলে X icon, না হলে Menu icon।
+- `<ul className={...}>` → mobile view এ menu list দেখাবে, animation সহ।
+- `<h3 className='ml-4'>My Navbar</h3>` → navbar title।
+- `<ul className='md:flex hidden'> {links} </ul>` → desktop view এ menu items flex আকারে দেখাবে।
+- `<button>Sign In</button>` → extra button।
+
+---
+
+4. Responsive Design
 📌 Explanation:
 - md:hidden → medium screen এ hide হবে।
 - md:flex hidden → large screen এ flex layout visible হবে।
@@ -406,7 +596,7 @@ return (
 
 ---
 
-6. Output (Example)
+5. Output (Example)
 👉 Small Screen:
 - Menu icon → click করলে open state true হবে।
 - X icon → দেখাবে এবং menu list visible হবে।
@@ -416,7 +606,7 @@ return (
 
 ---
 
-7. Advantages
+6. Advantages
 - Dynamic toggle → useState দিয়ে সহজে manage করা যায়।
 - Lucide icons → modern এবং customizable icons।
 - Responsive design → small এবং large screen এ আলাদা layout।
@@ -439,104 +629,100 @@ return (
 
 🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
 - Toggle menu items কীভাবে কাজ করে?
-- useState দিয়ে menu toggle state কিভাবে manage হয়?
+- useState দিয়ে toggle state কিভাবে manage হয়?
 - Lucide icons (Menu, X) কীভাবে ব্যবহার করা হয়েছে?
 - Responsive design এ md:hidden এবং md:flex এর ভূমিকা কী?
-- প্রতিটি line of code কী করছে?
-- ai prompt for pricingData:
-  give me data for pricing options,
-  each price will have
-  information, and will have features, 
-  for my gym. add a few more features 
-  and give me this in JSON
-
-
+- Link component এ hover effect কিভাবে যোগ করা হয়েছে?
+- Pricing data future এ কিভাবে তৈরি করা যাবে?
 
 📝 Notes (বিস্তারিত তথ্য)
 
-1. Navigation Data
+1. Full Code (NavBar.jsx)
 👉 Code:
+import React, { useState } from 'react';
+import Link from './Link';
+import { Menu, X } from 'lucide-react';
+
 const navigationData = [
-    { name: "Home", path: "/home", id: 1 },
-    { name: "About Us", path: "/about-us", id: 2 },
-    { name: "Services", path: "/services", id: 3 },
-    { name: "Contact", path: "/contact", id: 4 },
-    { name: "Blog", path: "/blog", id: 5 }
+  { id: 1, name: "Home", path: "/" },
+  { id: 2, name: "About", path: "/about" },
+  { id: 3, name: "Services", path: "/services" },
+  { id: 4, name: "Blog", path: "/blog" },
+  { id: 5, name: "Contact", path: "/contact" }
 ];
 
-📌 Explanation:
-- navigationData → array of objects।
-- প্রতিটি object এ id, name, path আছে।
-- এই data loop করে dynamic navigation links তৈরি করা হবে।
-- Future এ সহজে update করা যাবে।
+const NavBar = () => {
+  const [open, setOpen] = useState(false);
 
----
+  const links = navigationData.map(route => <Link key={route.id} route={route}></Link>);
 
-2. State Declaration
-👉 Code:
-const [open, setOpen] = useState(false);
-
-📌 Explanation:
-- useState(false) → শুরুতে menu বন্ধ থাকবে।
-- open → boolean state (true হলে menu খোলা, false হলে বন্ধ)।
-- setOpen → state update করার function।
-
----
-
-3. Links Mapping
-👉 Code:
-const links = navigationData.map(route => <Link key={route.id} route={route}></Link>)
-
-📌 Explanation:
-- navigationData.map(...) → প্রতিটি route object loop করছে।
-- <Link ...> → Link component এ route props পাঠানো হচ্ছে।
-- ফলে dynamic navigation links তৈরি হচ্ছে।
-
----
-
-4. NavBar Component Return
-👉 Code:
-return (
-    <nav className='flex justify-between mx-10 mt-4'>
-        <span className='flex' onClick={() => setOpen(!open)}>
-            {
-                open ?
-                    <X className='md:hidden'></X> :
-                    <Menu className='md:hidden'></Menu>
-            }
-            <ul className={`md:hidden absolute duration-1000 text-black
-                ${open ? 'top-8' : '-top-40'}
-                bg-amber-200`}>
-                {links}
-            </ul>
-            <h3 className='ml-4'>My Navbar</h3>
-        </span>
-        <ul className='md:flex hidden'>
-            {links}
+  return (
+    <nav className='flex justify-between mx-10'>
+      <span className='flex' onClick={() => setOpen(!open)}>
+        {
+          open ? <X className='md:hidden'></X> : <Menu className='md:hidden'></Menu>
+        }
+        <ul className={`md:hidden absolute duration-1000 text-black
+              ${open ? 'top-8' : '-top-40'}
+              bg-amber-200`}>
+          {links}
         </ul>
-        <button>Sign In</button>
-    </nav>
-);
+        <h3 className='ml-4'>My Navbar</h3>
+      </span>
 
-📌 Explanation (Line by Line):
-- `<nav className='flex justify-between mx-10 mt-4'>` → Navbar container, flex layout, margin।
-- `<span className='flex' onClick={() => setOpen(!open)}>` → span element, click করলে open state toggle হবে।
-- `{ open ? <X className='md:hidden'></X> : <Menu className='md:hidden'></Menu>}` →  
-  - যদি open true হয় → X icon দেখাবে।  
-  - যদি open false হয় → Menu icon দেখাবে।  
-  - md:hidden → medium screen এ icon hide হবে।
-- `<ul className={...}>` → small screen এ menu list দেখাবে।  
-  - open true হলে → top-8 (visible)।  
-  - open false হলে → -top-40 (hidden)।  
-  - duration-1000 → smooth animation।
-  - bg-amber-200 → background color।
-- `<h3 className='ml-4'>My Navbar</h3>` → Navbar title।
-- `<ul className='md:flex hidden'> { links } </ul>` → large screen এ horizontal menu দেখাবে।
-- `<button>Sign In</button>` → Sign In button।
+      <ul className='md:flex hidden'>
+        {links}
+      </ul>
+      <button>Sign In</button>
+    </nav>
+  );
+};
+
+export default NavBar;
 
 ---
 
-5. Responsive Design
+2. Full Code (Link.jsx)
+👉 Code:
+import React from 'react';
+
+const Link = ({route}) => {
+  return (
+    <li className='px-4 lg:mr-10 hover:bg-amber-400'>
+      <a href={route.path}>{route.name}</a>
+    </li>
+  );
+};
+
+export default Link;
+
+---
+
+3. Explanation (Line by Line)
+
+📌 NavBar.jsx
+- `import React, { useState }` → React functional component + useState hook।
+- `import { Menu, X } from 'lucide-react'` → Lucide icons import।
+- `navigationData` → array of objects with id, name, path।
+- `const [open, setOpen] = useState(false)` → menu initially closed।
+- `const links = navigationData.map(...)` → dynamic links তৈরি হচ্ছে।
+- `<span onClick={() => setOpen(!open)}>` → click করলে open state toggle হবে।
+- `{ open ? <X> : <Menu> }` → open true হলে X icon, না হলে Menu icon।
+- `<ul className={...}>` → mobile view এ menu list দেখাবে, animation সহ।
+- `${open ? 'top-8' : '-top-40'}` → conditional class, open হলে menu নিচে আসবে, না হলে উপরে hide হবে।
+- `<h3 className='ml-4'>My Navbar</h3>` → navbar title।
+- `<ul className='md:flex hidden'> {links} </ul>` → desktop view এ menu items flex আকারে দেখাবে।
+- `<button>Sign In</button>` → extra button।
+
+📌 Link.jsx
+- `Link` component props থেকে route পাচ্ছে।
+- `<li className='px-4 lg:mr-10 hover:bg-amber-400'>` → padding, margin, এবং hover effect যোগ করা হয়েছে।
+- `<a href={route.path}>{route.name}</a>` → route এর path এবং name UI তে দেখাচ্ছে।
+- Result → প্রতিটি navigation link render হচ্ছে, hover করলে background color পরিবর্তন হবে।
+
+---
+
+4. Responsive Design
 📌 Explanation:
 - md:hidden → medium screen এ hide হবে।
 - md:flex hidden → large screen এ flex layout visible হবে।
@@ -544,22 +730,25 @@ return (
 
 ---
 
-6. Output (Example)
+5. Output (Example)
 👉 Small Screen:
 - Menu icon → click করলে open state true হবে।
 - X icon → দেখাবে এবং menu list visible হবে।
 👉 Large Screen:
 - Full navigation links horizontal layout এ দেখাবে।
 - Toggle icon hidden থাকবে।
+👉 Hover Effect:
+- Link item এ hover করলে background amber color হবে।
 
 ---
 
-7. Advantages
+6. Advantages
 - Dynamic toggle → useState দিয়ে সহজে manage করা যায়।
 - Lucide icons → modern এবং customizable icons।
 - Responsive design → small এবং large screen এ আলাদা layout।
 - Reusable links → navigationData থেকে dynamic link তৈরি।
-- Clean separation → Link component আলাদা রাখা হয়েছে।
+- Hover effect → UI interaction উন্নত হয়েছে।
+- Future scope → pricing data array তৈরি করে একইভাবে dynamic pricing UI বানানো যাবে।
 
 ---
 
@@ -568,7 +757,8 @@ return (
 - useState → menu toggle state manage করছে।
 - Lucide icons (Menu, X) → toggle button হিসেবে ব্যবহার হয়েছে।
 - Responsive design → small screen এ toggle menu, large screen এ full menu।
-- Result → dynamic, responsive, এবং modern navbar।
+- Link.jsx → hover effect যোগ করে UI আরও interactive হয়েছে।
+- Result → dynamic, responsive, এবং modern navbar, future এ pricing data যোগ করা যাবে।
 
 
 ===============================
@@ -576,161 +766,313 @@ return (
 ===============================
 
 🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
-- কীভাবে Pricing options React এ card আকারে দেখানো যায়?
-- Suspense এবং use hook দিয়ে data fetch করার নিয়ম।
-- PricingCard component কীভাবে কাজ করে?
-- Features list কীভাবে icon সহ দেখানো হয়?
-- প্রতিটি line of code কী করছে?
-- For react icon: Lucide React Icon
+- Pricing data কীভাবে JSON ফাইলে রাখা যায়?
+- Suspense এবং use hook দিয়ে data কীভাবে fetch করা হয়?
+- PricingOptions component কীভাবে কাজ করে?
+- PricingCard component কীভাবে data display করে?
+- PricingFeature component এ icon সহ feature list কীভাবে দেখানো হয়?
 
 📝 Notes (বিস্তারিত তথ্য)
 
-1. Navigation Data and NavBar
-👉 Code:
-const navigationData = [
-  { name: "Home", path: "/home", id: 1 },
-  { name: "About Us", path: "/about-us", id: 2 },
-  { name: "Services", path: "/services", id: 3 },
-  { name: "Contact", path: "/contact", id: 4 },
-  { name: "Blog", path: "/blog", id: 5 }
-];
+1. PricingData.json
+👉 Example Data:
+[
+  {
+    "name": "Basic Plan",
+    "price": "$29.99/month",
+    "id": 1,
+    "description": "Ideal for individuals who want to stay fit with essential gym access.",
+    "features": [
+      "Access to gym facilities during regular hours",
+      "Unlimited use of cardio equipment",
+      "1 Free personal training session (first month)",
+      "Access to basic fitness classes",
+      "Free Wi-Fi access"
+    ]
+  },
+  {
+    "name": "Premium Plan",
+    "price": "$49.99/month",
+    "popular": true,
+    "id": 2,
+    "description": "Perfect for individuals who want additional perks and flexibility.",
+    "features": [
+      "24/7 gym access",
+      "Unlimited use of all gym equipment",
+      "3 Free personal training sessions per month",
+      "Access to premium fitness classes",
+      "Access to sauna and steam room",
+      "Discount on merchandise and services",
+      "Free towel service"
+    ]
+  },
+  {
+    "name": "Family Plan",
+    "price": "$99.99/month",
+    "id": 3,
+    "description": "Great for families who want to stay healthy together.",
+    "features": [
+      "2 adults and up to 2 children included",
+      "24/7 gym access",
+      "Unlimited use of gym equipment",
+      "Free personal training sessions for each adult",
+      "Access to family fitness classes",
+      "Free childcare during gym visits",
+      "Discounts on family wellness programs",
+      "Free access to family wellness events",
+      "Exclusive family fitness challenges"
+    ]
+  }
+]
 
 📌 Explanation:
-- navigationData → array of objects।
-- প্রতিটি object এ id, name, path আছে।
-- NavBar component → useState দিয়ে toggle menu তৈরি করছে।
-- Lucide icons (Menu, X) → responsive toggle icon হিসেবে ব্যবহার হয়েছে।
+- PricingData.json → array of objects।
+- প্রতিটি object এ name, price, id, description, features আছে।
+- features → array of strings, প্রতিটি feature আলাদা করে দেখানো হবে।
 
 ---
 
-2. App.jsx
-👉 Code:
-const pricingPromise = fetch('PricingData.json').then(res => res.json());
+2. PricingOptions.jsx
+👉 Full Code:
+import React, { use } from 'react';
+import PricingCard from '../pricingCard/pricingCard';
 
-function App() {
-  return (
-    <>
-      <header> 
-         <NavBar></NavBar>
-         <h1 className="text-7xl underline">Vite + React</h1>
-      </header>
-      <main>
-        <Suspense fallback={<span class="loading loading-spinner loading-xl"></span>}>
-          <PricingOptions pricingPromise={pricingPromise}></PricingOptions>
-        </Suspense> 
-      </main>
-    </>
-  );
-}
-
-📌 Explanation (Line by Line):
-- `pricingPromise` → PricingData.json থেকে data fetch করছে।
-- `<Suspense>` → asynchronous data load হলে fallback spinner দেখাবে।
-- `<PricingOptions pricingPromise={pricingPromise}>` → PricingOptions component এ promise পাঠানো হচ্ছে।
-- Result → Pricing cards asynchronously render হবে।
-
----
-
-3. PricingOptions.jsx
-👉 Code:
 const PricingOptions = ({pricingPromise}) => {
-    const PricingData = use(pricingPromise);
-    return (
-        <div>
-            <h1 className='text-5xl'>Get Our Membership</h1>
-            <div>
-                {
-                    PricingData.map(pricing => <PricingCard key={pricing.id} pricing={pricing}></PricingCard>)
-                }
-            </div>
-        </div>
-    );
+  const pricingData = use(pricingPromise);
+
+  console.log(pricingData); // (3) [{…}, {…}, {…}]
+
+  return (
+    <div> 
+      <h2 className='text-5xl'>Get our Membership</h2>
+      <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+        {
+          pricingData.map(pricing => <PricingCard
+            key={pricing.id}
+            pricing={pricing}></PricingCard>)
+        }
+      </div>
+    </div>
+  );
 };
 
+export default PricingOptions;
+
 📌 Explanation (Line by Line):
-- `use(pricingPromise)` → React experimental hook, promise resolve করে data দেয়।
-- `PricingData.map(...)` → প্রতিটি pricing object loop করছে।
+- `use(pricingPromise)` → Suspense এর সাথে কাজ করে promise resolve করে data আনে।
+- `console.log(pricingData)` → data console এ দেখা যায়।
+- `<h2>` → section heading।
+- `<div className='grid ...'>` → responsive grid layout।
+- `pricingData.map(...)` → প্রতিটি pricing object loop করছে।
 - `<PricingCard pricing={pricing}>` → PricingCard component এ data পাঠানো হচ্ছে।
-- Result → একাধিক pricing card render হবে।
 
 ---
 
-4. PricingCard.jsx
-👉 Code:
+3. PricingCard.jsx
+👉 Full Code:
+import React from 'react';
+import PricingFeature from './PricingFeature';
+
 const PricingCard = ({pricing}) => {
-    const {name, price, description, features} = pricing;
-    return (
-        <div className='border bg-amber-600 rounded-2xl'>
-            {/* card header */}
-            <div className='grid md:grid-cols-3 '>
-                <h1 className='text-7xl'>{name}</h1>
-                <h1 className='text-3xl'>{price}</h1>
-            </div>
-            {/* card body */}
-            <div className='bg-amber-400 p-4 rounded-2xl mt-10'>
-                <p>{description}</p>
-                {
-                    features.map(feature=> <PricingFeature feature={feature}></PricingFeature>)
-                }
-            </div>
-        </div>
-    );
+  const {name, price, description, features} = pricing;
+  return (
+    <div className='border bg-amber-600 rounded-2xl'>
+      {/* card header */}
+      <div className='grid md:grid-cols-3'>
+        <h1 className='text-7xl'>{name}</h1>
+        <h4 className='text-3xl'>{price}</h4>
+      </div>
+      {/* card body */}
+      <div className='bg-amber-400 p-4 rounded-2xl mt-10'>
+        <p>{description}</p>
+        {
+          features.map((feature, index) => <PricingFeature key={index} feature={feature}></PricingFeature>)
+        }
+      </div>
+    </div>
+  );
 };
 
+export default PricingCard;
+
 📌 Explanation (Line by Line):
-- `{name, price, description, features}` → pricing object থেকে destructure করা হয়েছে।
-- `<h1 className='text-7xl'>{name}</h1>` → plan name দেখাচ্ছে।
-- `<h1 className='text-3xl'>{price}</h1>` → plan price দেখাচ্ছে।
+- `{name, price, description, features}` → destructuring করে pricing object থেকে data নিচ্ছে।
+- `<h1>{name}</h1>` → plan name দেখাচ্ছে।
+- `<h4>{price}</h4>` → plan price দেখাচ্ছে।
 - `<p>{description}</p>` → plan description দেখাচ্ছে।
-- `features.map(...)` → প্রতিটি feature PricingFeature component এ পাঠানো হচ্ছে।
-- Result → সুন্দর card layout তৈরি হচ্ছে।
+- `features.map(...)` → প্রতিটি feature loop করে PricingFeature component এ পাঠানো হচ্ছে।
 
 ---
 
-5. PricingFeature.jsx
-👉 Code:
+4. PricingFeature.jsx
+👉 Full Code:
+import { CircleCheckBig } from 'lucide-react';
+import React from 'react';
+
 const PricingFeature = ({feature}) => {
-    return (
-        <p className='flex'> 
-          <CircleCheckBig className='mr-2'></CircleCheckBig>
-          {feature}
-        </p>
-    );
+  return (
+    <p className='flex'>
+      <CircleCheckBig className='mr-2'></CircleCheckBig>{feature}
+    </p>
+  );
 };
 
+export default PricingFeature;
+
 📌 Explanation (Line by Line):
-- `feature` → single feature string।
-- `<CircleCheckBig>` → Lucide icon, checkmark দেখাচ্ছে।
-- `{feature}` → feature text দেখাচ্ছে।
-- Result → প্রতিটি feature icon সহ দেখানো হচ্ছে।
+- `CircleCheckBig` → Lucide icon import করা হয়েছে।
+- `<p className='flex'>` → flex layout এ icon + text দেখাচ্ছে।
+- `{feature}` → প্রতিটি feature string UI তে দেখাচ্ছে।
+- Result → প্রতিটি feature এর পাশে check icon দেখাচ্ছে।
 
 ---
 
-6. Output (Example)
-👉 UI:
-- Navbar → responsive toggle menu।
-- PricingOptions → membership plans।
-- PricingCard → name, price, description, features।
-- PricingFeature → check icon সহ feature list।
+✅ Output (Example)
+- Membership plans → Basic, Premium, Family।
+- প্রতিটি plan → name, price, description, features দেখাচ্ছে।
+- Features → check icon সহ list আকারে দেখাচ্ছে।
+- Premium plan এ popular flag future এ highlight করা যাবে।
 
 ---
 
-7. Advantages
-- Suspense → asynchronous data load smooth করে।
-- use hook → promise resolve করে data দেয়।
-- PricingCard → reusable component।
-- PricingFeature → icon সহ সুন্দর feature list।
-- Responsive design → Tailwind classes দিয়ে সুন্দর layout।
+✅ Advantages
+- JSON data → সহজে update করা যায়।
+- Suspense + use → async data fetch সহজ হয়েছে।
+- PricingOptions → dynamic loop করে PricingCard তৈরি করছে।
+- PricingCard → প্রতিটি plan সুন্দরভাবে UI তে দেখাচ্ছে।
+- PricingFeature → icon সহ feature list user-friendly হয়েছে।
 
 ---
 
 📌 Summary
-- PricingData.json থেকে data fetch করা হয়েছে।
-- Suspense + use hook → asynchronous rendering।
-- PricingOptions → PricingCard loop করে render করছে।
-- PricingCard → name, price, description, features দেখাচ্ছে।
-- PricingFeature → check icon সহ feature দেখাচ্ছে।
-- Result → dynamic, responsive, এবং সুন্দর pricing options card।
+- PricingData.json → membership plans data store করছে।
+- PricingOptions.jsx → data loop করে PricingCard render করছে।
+- PricingCard.jsx → plan details দেখাচ্ছে।
+- PricingFeature.jsx → icon সহ feature list দেখাচ্ছে।
+- Result → dynamic, responsive, এবং modern pricing section তৈরি হয়েছে।
 
 
+===============================
+44-6 Use Daisy UI Pricing Card to Modify Component
+===============================
 
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- DaisyUI pricing card JSX কীভাবে ব্যবহার করা যায়?
+- PricingOptions component এ DaisyPricing কীভাবে integrate করা হয়েছে?
+- DaisyPricing component কীভাবে data display করছে?
+- Badge, card-body, এবং button class এর ভূমিকা কী?
+- প্রতিটি line of code কী করছে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. PricingOptions.jsx
+👉 Full Code:
+import React, { use } from 'react';
+import PricingCard from '../pricingCard/pricingCard';
+import DaisyPricing from '../DaisyPricing/DaisyPricing';
+
+const PricingOptions = ({pricingPromise}) => {
+  const pricingData = use(pricingPromise);
+
+  return (
+    <div> 
+      <h2 className='text-5xl'>Get our Membership</h2>
+      <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+        {/* পুরনো PricingCard বাদ দিয়ে DaisyPricing ব্যবহার করা হয়েছে */}
+        {
+          pricingData.map(pricing => <DaisyPricing key={pricing.id} pricing={pricing}></DaisyPricing>)
+        }
+      </div>
+    </div>
+  );
+};
+
+export default PricingOptions;
+
+📌 Explanation (Line by Line):
+- `import React, { use }` → React এবং Suspense এর জন্য use hook।
+- `import DaisyPricing` → নতুন DaisyUI ভিত্তিক pricing card component।
+- `const pricingData = use(pricingPromise)` → promise resolve করে pricing data আনা হচ্ছে।
+- `<h2>` → section heading।
+- `<div className='grid ...'>` → responsive grid layout।
+- `pricingData.map(...)` → প্রতিটি pricing object loop করছে।
+- `<DaisyPricing pricing={pricing}>` → DaisyPricing component এ data পাঠানো হচ্ছে।
+
+---
+
+2. DaisyPricing.jsx
+👉 Full Code:
+import React from 'react';
+
+const DaisyPricing = ({pricing}) => {
+  const {name, price, features, popular} = pricing;
+  return (
+    <div className="card w-96 bg-base-100 shadow-sm">
+      <div className="card-body">
+        {
+          popular && <span className="badge badge-xs badge-warning">Most Popular</span>
+        }
+        <div className="flex justify-between">
+          <h2 className="text-3xl font-bold">{name}</h2>
+          <span className="text-xl">{price}</span>
+        </div>
+        <ul className="mt-6 flex flex-col gap-2 text-xs">
+          {
+            features.map((feature, index) =>  
+              <li key={index}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="size-4 me-2 inline-block text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>{feature}</span>
+              </li>)
+          }
+        </ul>
+        <div className="mt-6">
+          <button className="btn btn-primary btn-block">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DaisyPricing;
+
+📌 Explanation (Line by Line):
+- `const {name, price, features, popular}` → pricing object থেকে data destructuring।
+- `<div className="card ...">` → DaisyUI card container।
+- `<div className="card-body">` → card এর content body।
+- `popular && <span ...>` → যদি popular true হয় তাহলে badge দেখাবে ("Most Popular")।
+- `<div className="flex justify-between">` → name এবং price side‑by‑side দেখাচ্ছে।
+- `<h2>{name}</h2>` → plan name।
+- `<span>{price}</span>` → plan price।
+- `<ul className="mt-6 ...">` → features list container।
+- `features.map(...)` → প্রতিটি feature loop করে list item তৈরি করছে।
+- `<svg ...>` → check icon (tick mark) দেখাচ্ছে।
+- `<span>{feature}</span>` → feature text।
+- `<button className="btn btn-primary btn-block">Subscribe</button>` → DaisyUI button, full width।
+
+---
+
+✅ Output (Example)
+- Membership plans → DaisyUI card format এ দেখাচ্ছে।
+- Popular plan → badge সহ highlight হচ্ছে।
+- Features → check icon সহ list আকারে দেখাচ্ছে।
+- Subscribe button → প্রতিটি card এ CTA (Call to Action)।
+
+---
+
+✅ Advantages
+- DaisyUI card → ready‑made design, সুন্দর UI।
+- Badge → popular plan highlight করা যায়।
+- Responsive grid → বিভিন্ন screen size এ সুন্দরভাবে layout।
+- Features → icon সহ list user‑friendly হয়েছে।
+- Button → সহজে CTA যোগ করা যায়।
+
+---
+
+📌 Summary
+- PricingOptions.jsx → DaisyPricing component ব্যবহার করছে।
+- DaisyPricing.jsx → DaisyUI card দিয়ে plan details দেখাচ্ছে।
+- Badge → popular plan highlight করছে।
+- Features → check icon সহ list আকারে দেখাচ্ছে।
+- Result → modern, responsive, DaisyUI styled pricing section।
