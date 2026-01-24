@@ -1076,3 +1076,110 @@ export default DaisyPricing;
 - Badge → popular plan highlight করছে।
 - Features → check icon সহ list আকারে দেখাচ্ছে।
 - Result → modern, responsive, DaisyUI styled pricing section।
+
+
+===============================
+44-7 Add Charts to Your React App
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- React এ chart কীভাবে যোগ করা যায়?
+- Recharts লাইব্রেরি কীভাবে install এবং ব্যবহার করা হয়?
+- Student data JSON কীভাবে তৈরি করা হয়েছে?
+- LineChart component কীভাবে কাজ করে?
+- প্রতিটি line of code কী করছে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Install Recharts
+👉 Command:
+npm install recharts
+
+📌 Explanation:
+- Recharts → React এর জন্য charting library।
+- বিভিন্ন chart যেমন LineChart, BarChart, PieChart ইত্যাদি তৈরি করা যায়।
+- Tailwind বা DaisyUI এর সাথে সুন্দরভাবে integrate হয়।
+
+---
+
+2. Student Data (resultData)
+👉 Full JSON:
+const resultData = [
+  { "student_id": 1, "name": "Alice", "physics": 85, "chemistry": 90, "math": 88 },
+  { "student_id": 2, "name": "Bob", "physics": 92, "chemistry": 85, "math": 91 },
+  { "student_id": 3, "name": "Charlie", "physics": 78, "chemistry": 82, "math": 80 },
+  { "student_id": 4, "name": "David", "physics": 88, "chemistry": 86, "math": 92 },
+  { "student_id": 5, "name": "Eva", "physics": 95, "chemistry": 91, "math": 93 },
+  { "student_id": 6, "name": "Frank", "physics": 80, "chemistry": 78, "math": 85 },
+  { "student_id": 7, "name": "Grace", "physics": 91, "chemistry": 94, "math": 90 },
+  { "student_id": 8, "name": "Hank", "physics": 70, "chemistry": 72, "math": 75 },
+  { "student_id": 9, "name": "Ivy", "physics": 77, "chemistry": 80, "math": 78 },
+  { "student_id": 10, "name": "Jack", "physics": 89, "chemistry": 87, "math": 90 }
+]
+
+📌 Explanation:
+- প্রতিটি object এ student_id, name, physics, chemistry, math আছে।
+- physics, chemistry, math → আলাদা property, nested নয়।
+- এই data chart এ ব্যবহার করা হবে।
+
+---
+
+3. ResultsChart.jsx
+👉 Full Code:
+import React from 'react';
+import { Line, LineChart, XAxis, YAxis } from 'recharts';
+
+const ResultsChart = () => {
+  return (
+    <div>
+      <LineChart width={800} height={500} data={resultData}>
+        <XAxis dataKey="name"></XAxis>
+        <YAxis></YAxis>
+        <Line dataKey="math"></Line>
+        <Line dataKey="chemistry" stroke="red"></Line>
+      </LineChart>
+    </div>
+  );
+};
+
+export default ResultsChart;
+
+---
+
+4. Explanation (Line by Line)
+- `import { Line, LineChart, XAxis, YAxis } from 'recharts'` → Recharts components import করা হয়েছে।
+- `<LineChart width={800} height={500} data={resultData}>` → chart container, width/height সেট করা হয়েছে, data হিসেবে resultData দেওয়া হয়েছে।
+- `<XAxis dataKey="name">` → X-axis এ student name দেখাবে।
+- `<YAxis>` → Y-axis এ marks scale দেখাবে।
+- `<Line dataKey="math">` → math marks line chart এ দেখাবে।
+- `<Line dataKey="chemistry" stroke="red">` → chemistry marks আলাদা line, red color দিয়ে দেখাবে।
+- Result → দুই subject এর marks line chart এ compare করা যাবে।
+
+---
+
+✅ Output (Example)
+- X-axis → student names।
+- Y-axis → marks (70–100 range)।
+- Blue line → math marks।
+- Red line → chemistry marks।
+- Chart → প্রতিটি student এর subject wise performance দেখাচ্ছে।
+
+---
+
+✅ Advantages
+- Recharts → সহজে chart তৈরি করা যায়।
+- JSON data → dynamic ভাবে chart এ ব্যবহার করা যায়।
+- Multiple Line → একসাথে একাধিক subject compare করা যায়।
+- Responsive → width/height customize করা যায়।
+- Visual representation → data সহজে বোঝা যায়।
+
+---
+
+📌 Summary
+- Recharts install করে React এ chart যোগ করা হয়েছে।
+- resultData → student marks JSON data।
+- ResultsChart.jsx → LineChart তৈরি করেছে।
+- XAxis → student name।
+- YAxis → marks।
+- Line → math এবং chemistry marks আলাদা line এ দেখাচ্ছে।
+- Result → dynamic, responsive chart যা student performance visualize করছে।
