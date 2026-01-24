@@ -1183,3 +1183,183 @@ export default ResultsChart;
 - YAxis → marks।
 - Line → math এবং chemistry marks আলাদা line এ দেখাচ্ছে।
 - Result → dynamic, responsive chart যা student performance visualize করছে।
+
+
+===============================
+44-8 Explore Axios JS Chart Data Processing and Bar Chart
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Axios দিয়ে JSON data কীভাবে fetch করা যায়?
+- Suspense এবং use hook দিয়ে promise resolve কীভাবে হয়?
+- Chart data processing কীভাবে করা হয়?
+- BarChart component কীভাবে কাজ করে?
+- প্রতিটি line of code কী করছে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Install Axios & Recharts
+👉 Command:
+npm install axios  
+npm install recharts
+
+📌 Explanation:
+- Axios → HTTP client, JSON data fetch করার জন্য।
+- Recharts → React charting library, BarChart, LineChart ইত্যাদি তৈরি করা যায়।
+
+---
+
+2. marksData.json
+👉 Example Data:
+[
+  {
+    "student_id": 1,
+    "name": "Alice",
+    "marks": { "physics": 85, "chemistry": 90, "math": 88 }
+  },
+  {
+    "student_id": 2,
+    "name": "Bob",
+    "marks": { "physics": 92, "chemistry": 85, "math": 91 }
+  },
+  ...
+]
+
+📌 Explanation:
+- প্রতিটি student object এ student_id, name, marks আছে।
+- marks → nested object, physics, chemistry, math property হিসেবে আছে।
+- এই data chart এ ব্যবহার করা হবে।
+
+---
+
+3. App.jsx
+👉 Full Code:
+import { Suspense } from "react";
+import "./App.css";
+import DaisyNav from "./components/DaisyNav/DaisyNav";
+import NavBar from "./components/NavBar/NavBar";
+import PricingOptions from "./components/PricingOptions/PricingOptions";
+import ResultsChart from "./components/ResultsChart/ResultsChart";
+import axios from "axios";
+import MarkChart from "./components/MarkChart/MarkChart";
+
+const pricingPromise = fetch('pricingData.json').then(res => res.json());
+const marksPromise = axios.get('marksData.json');
+
+function App() {
+  return (
+    <>
+      <header>
+        <NavBar></NavBar>
+        {/* <DaisyNav></DaisyNav> */}
+      </header>
+      <main>
+        <Suspense fallback={<span className="loading loading-spinner loading-lg"></span>}>
+          <PricingOptions pricingPromise={pricingPromise}></PricingOptions>
+        </Suspense>
+
+        <Suspense fallback={<span className="loading loading-spinner loading-lg"></span>}>
+          <MarkChart marksPromise={marksPromise}></MarkChart>
+        </Suspense>
+
+        <ResultsChart></ResultsChart>
+      </main>
+    </>
+  );
+}
+
+export default App;
+
+📌 Explanation (Line by Line):
+- `axios.get('marksData.json')` → marksData.json fetch করছে।
+- `Suspense` → async data load হলে fallback spinner দেখাচ্ছে।
+- `<MarkChart marksPromise={marksPromise}>` → MarkChart component এ promise পাঠানো হচ্ছে।
+- Result → PricingOptions, MarkChart, ResultsChart একসাথে render হচ্ছে।
+
+---
+
+4. MarkChart.jsx
+👉 Full Code:
+import React, { use } from 'react';
+import { Bar, BarChart, XAxis, YAxis } from 'recharts';
+
+const MarkChart = ({marksPromise}) => {
+  const marksDataRes = use(marksPromise);
+  console.log(marksDataRes);
+
+  const marksData = marksDataRes.data;
+  // data processing for the chart
+  const markChartData = marksData.map(studentData => {
+    const student = {
+      id: studentData.student_id,
+      name: studentData.name,
+      physics: studentData.marks.physics,
+      chemistry: studentData.marks.chemistry,
+      math: studentData.marks.math
+    }
+
+    const avg = (student.physics + student.chemistry + student.math) / 3;
+    student.avg = avg;
+
+    return student;
+  })
+
+  console.log(markChartData)
+  return (
+    <div>
+      <BarChart width={500} height={300} data={markChartData}>
+        <XAxis dataKey="name"></XAxis>
+        <YAxis></YAxis>
+        <Bar dataKey="avg" fill='yellow'></Bar>
+        <Bar dataKey="chemistry" fill='blue'></Bar>
+        <Bar></Bar>
+      </BarChart>
+    </div>
+  );
+};
+
+export default MarkChart;
+
+---
+
+5. Explanation (Line by Line)
+- `import { Bar, BarChart, XAxis, YAxis } from 'recharts'` → Recharts components import।
+- `const marksDataRes = use(marksPromise)` → Suspense এর সাথে promise resolve করে data আনা হচ্ছে।
+- `marksDataRes.data` → Axios response থেকে data পাওয়া যাচ্ছে।
+- `marksData.map(...)` → প্রতিটি student object loop করছে।
+- `student = { id, name, physics, chemistry, math }` → nested marks থেকে flat object বানানো হচ্ছে।
+- `const avg = (...) / 3` → তিন subject এর average হিসাব করা হচ্ছে।
+- `student.avg = avg` → student object এ avg যোগ করা হচ্ছে।
+- `<BarChart width={500} height={300} data={markChartData}>` → chart container।
+- `<XAxis dataKey="name">` → student name X-axis এ দেখাচ্ছে।
+- `<YAxis>` → marks scale Y-axis এ দেখাচ্ছে।
+- `<Bar dataKey="avg" fill='yellow'>` → average marks yellow bar।
+- `<Bar dataKey="chemistry" fill='blue'>` → chemistry marks blue bar।
+- `<Bar>` → placeholder, future এ অন্য subject যোগ করা যাবে।
+
+---
+
+✅ Output (Example)
+- X-axis → student names।
+- Y-axis → marks (70–100 range)।
+- Yellow bar → average marks।
+- Blue bar → chemistry marks।
+- Chart → প্রতিটি student এর performance bar chart এ দেখাচ্ছে।
+
+---
+
+✅ Advantages
+- Axios → সহজে JSON data fetch করা যায়।
+- Suspense + use → async data সহজে handle করা যায়।
+- Data processing → nested marks থেকে flat object বানানো হয়েছে।
+- BarChart → একসাথে multiple subject visualize করা যায়।
+- Average calculation → overall performance দেখানো যায়।
+
+---
+
+📌 Summary
+- Axios দিয়ে marksData.json fetch করা হয়েছে।
+- Suspense + use দিয়ে promise resolve করা হয়েছে।
+- MarkChart.jsx → data process করে flat object বানানো হয়েছে।
+- BarChart → average এবং chemistry marks bar আকারে দেখাচ্ছে।
+- Result → dynamic, responsive chart যা student performance visualize করছে।
